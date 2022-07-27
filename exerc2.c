@@ -3,73 +3,87 @@
 #include <stdlib.h>
 typedef struct
 {
-    const char nome[30];
-    const char endereco[50];
+    char nome[50];
+    char endereco[50];
     char telefone[12];
-    int numtelefone[12];
-    
-    
 
 } Cadastro;
+
+int caracteres(Cadastro *c) // funcao que conta apenas a quantidade de caracteres dentro da estrutura
+{
+    int cc = 0;
+    for (int qntd = 0; qntd < strlen(c->nome); qntd++)// conta o laco FOR para o tamanho da string digitada
+    {
+        if (isalpha(c->nome[qntd]))
+        {
+            cc = cc + 1;
+            if (isalpha(c->endereco[qntd]))
+            {
+                cc = cc + 1; // conta caracteres
+            }
+        }
+    }
+    return cc; //retorna a quantidade de caracteres
+}
+
+int cdigitos(Cadastro *c)
+{
+    int cd = 0;
+    int a, b;
+    a = (strlen(c->endereco));
+    b = (strlen(c->telefone));
+    for (int qntd = 0; qntd < a; qntd++)
+    {
+        if (isdigit(c->endereco[qntd])&&(c->endereco[qntd]!='\n')
+                &&(c->endereco[qntd]!=NULL))
+        {
+            cd = cd + 1;
+        }
+    }
+    for (int qntd = 0; qntd < b; qntd++)
+    {
+        if (isdigit(c->telefone[qntd])&&(c->telefone[qntd]!='\n')
+                &&(c->telefone[qntd]!=NULL))
+        {
+            cd = cd + 1; // conta digitos
+        }
+    }
+
+    return cd;
+}
+void insere(Cadastro *c){
+    for(int i = 0; i < strlen(c->nome); i++){
+        c->nome[i] = NULL;
+        c->endereco[i]=NULL;
+        c->telefone[i]=NULL;
+    }
+}
 
 int main()
 {
     Cadastro pessoa;
+    insere(&pessoa);
     size_t contc = 0;
     size_t contd = 0;
     size_t acumuladorc = 0;
     size_t acumuladord = 0;
-    int a;
-    
+    int crct,dgts;
+
     printf("\n Digite o Nome da Pessoa a ser cadastrada \n");
     fflush(stdin);
-    fgets(pessoa.nome, 30, stdin);
+    fgets(pessoa.nome, 50, stdin);
     fflush(stdin);
     printf("\n Agora o endereco da Pessoa registrada\n");
     fflush(stdin);
     fgets(pessoa.endereco, 50, stdin);
     fflush(stdin);
     printf("\n Numero Telefonico separado por - \n");
-    fgets(pessoa.telefone,12,stdin);// Formula ignora novas linhas  e conta até 12 caracteres
-    contc = strlen(pessoa.nome);
-    contd = strlen(pessoa.telefone);
-for(int i = 0; i < strlen(pessoa.telefone); i++){
-      
-       pessoa.numtelefone[i]=pessoa.telefone[i];
-       printf ("indice = (%d) \n valor contido no vetor = (%c) \n",i, pessoa.numtelefone[i]);
-
-
-}
-
-
-    if (contc != 0)
-    {
-        for (int i = 0; i <= contc; i++)
-        {
-            if (isalpha(pessoa.nome[i]))
-            {
-                acumuladorc = acumuladorc + 1;
-            }
-
-            if (isalpha(pessoa.endereco[i]))
-            {
-                acumuladorc = acumuladorc + 1;
-            }
-
-            if (isdigit(pessoa.endereco[i]))
-            {
-                acumuladord = acumuladord + 1;
-            }
-            for (int e = 0; e < contd; e++)
-            {
-                if (isdigit(pessoa.telefone[e]))
-                {
-                    acumuladord = acumuladord + 1;
-                }
-            }
-
--        }
-        printf("\n Quantidade de caracteres foi: %d e a quantidade de digitos foi %d \n", acumuladorc, acumuladord);
-    }
+    fgets(pessoa.telefone, 12, stdin); // Formula ignora novas linhas  e conta até 12 caracteres
+    fflush(stdin);
+    crct = caracteres(&pessoa);
+    dgts = cdigitos(&pessoa);
+    
+    printf("\nQuantidade de Caracteres é:%d\n\n\n", crct);
+     printf("\nQuantidade de Digitos   é:%d\n\n\n", dgts);
     return 0;
 }
