@@ -11,18 +11,21 @@ typedef struct
 
 int caracteres(Cadastro *c) // funcao que conta apenas a quantidade de caracteres dentro da estrutura
 {
-    int cc = 0;
+    int cc = 0; // Variavel da contagem de caracteres
     for (int qntd = 0; qntd < strlen(c->nome); qntd++)// conta o laco FOR para o tamanho da string digitada
     {
         if (isalpha(c->nome[qntd]))
         {
             cc = cc + 1;
+        }
+    }          
+    for (int qntd = 0; qntd < strlen(c->endereco); qntd++){
             if (isalpha(c->endereco[qntd]))
             {
                 cc = cc + 1; // conta caracteres
             }
         }
-    }
+    
     return cc; //retorna a quantidade de caracteres
 }
 
@@ -82,8 +85,10 @@ int main()
     fflush(stdin);
     crct = caracteres(&pessoa);
     dgts = cdigitos(&pessoa);
-    
-    printf("\nQuantidade de Caracteres é:%d\n\n\n", crct);
-     printf("\nQuantidade de Digitos   é:%d\n\n\n", dgts);
+    printf("\n Nome: %s \n", pessoa.nome);
+    printf("\n Endereco: %s \n", pessoa.endereco);
+    printf("\n Telefone: %s \n\n\n", pessoa.telefone);
+    printf("\nQuantidade de Caracteres é:%d\n\n", crct);
+     printf("\nQuantidade de Digitos   é:%d\n\n", dgts);
     return 0;
 }
